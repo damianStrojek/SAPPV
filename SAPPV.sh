@@ -35,7 +35,7 @@ PARAMETERS=(
   ["login/min_password_lowercase"]="0"
   ["login/min_password_uppercase"]="0"
   ["login/min_password_digits"]="0"
-  ["login/min_password_letters"]="1"
+  ["login/min_password_letters"]="0"
   ["login/fails_to_user_lock"]="<5"
   ["login/password_expiration_time"]=">90"
   ["login/password_max_idle_initial"]="<14"
@@ -43,7 +43,7 @@ PARAMETERS=(
   ["login/password_downwards_compatibility"]="0"
   ["rfc/reject_expired_passwd"]="0"
   ["rsau/enable"]="0"
-  ["rdisp/gui_auto_logout"]="<5"
+  ["rdisp/gui_auto_logout"]=">2"
   ["service/protectedwebmethods"]="SDEFAULT"
   ["snc/enable"]="0"
   ["ucon/rfc/active"]="0"
@@ -139,14 +139,14 @@ get_color() {
         echo "$GREEN"
       fi
       ;;
-    "auth/rfc_authority_check"|"gw/reg_no_conn_info"|"rdisp/gui_auto_logout"|"login/min_password_lng"|"login/fails_to_user_lock"|"login/password_max_idle_initial"|"login/password_max_idle_productive")
+    "auth/rfc_authority_check"|"gw/reg_no_conn_info"|"login/min_password_lng"|"login/fails_to_user_lock"|"login/password_max_idle_initial"|"login/password_max_idle_productive")
       if [ "$(echo "$value" | tr -d '[:space:]')" -lt "${expected_value//<}" ]; then
         echo "$RED"
       else
         echo "$GREEN"
       fi
       ;;
-    "login/password_expiration_time")
+    "login/password_expiration_time"|"rdisp/gui_auto_logout")
       if [ "$(echo "$value" | tr -d '[:space:]')" -gt "${expected_value//>/}" ]; then
         echo "$RED"
       else
