@@ -8,7 +8,7 @@ Key Features:
 - Color-Coded Output: Provides color-coded output to easily identify parameters that meet or fail the validation criteria, with red highlighting for issues and green for compliance.
 - Customizable Parameters: Easily configurable with a list of parameters to check, allowing for flexible and comprehensive configuration analysis.
 
-![Run 1](./assets/images/Run-1.png)
+![Run 2](./assets/images/Run-2.png)
 
 ## Using SAPPV
 

@@ -8,6 +8,8 @@
 GREEN='\033[0;32m'      # Green
 RED='\033[0;31m'        # Red
 YELLOW='\033[0;33m'     # Yellow
+GRAY='\033[0;37m'       # Gray
+ITALIC='\033[3m'        # Italic
 BOLD='\033[1m'          # Bold
 NC='\033[0m'            # No Color
 
@@ -45,6 +47,39 @@ PARAMETERS=(
   ["service/protectedwebmethods"]="SDEFAULT"
   ["snc/enable"]="0"
   ["ucon/rfc/active"]="0"
+)
+
+# Names of potential vulnerabilities to report
+declare -A VULNERABILITIES
+VULNERABILITIES=(
+  ["auth/object_disabling_active"]="SAP Parameter Misconfiguration: auth/object_disabling_active"
+  ["auth/rfc_authority_check"]="SAP Parameter Misconfiguration: auth/rfc_authority_check"
+  ["auth/no_check_in_some_cases"]="SAP Parameter Misconfiguration: auth/no_check_in_some_cases"
+  ["bdc/bdel_auth_check"]="SAP Parameter Misconfiguration: bdc/bdel_auth_check"
+  ["gw/reg_no_conn_info"]="SAP Parameter Misconfiguration: gw/reg_no_conn_info"
+  ["icm/security_log"]="SAP Parameter Misconfiguration: icm/security_log"
+  ["icm/server_port_0"]="ICM Unencrypted communication (if PROT=HTTP)"
+  ["icm/server_port_1"]="ICM Unencrypted communication (if PROT=HTTP)"
+  ["icm/server_port_2"]="ICM Unencrypted communication (if PROT=HTTP)"
+  ["login/password_compliance_to_current_policy"]="SAP Compliance to password policy is not enforced"
+  ["login/no_automatic_user_sapstar"]="SAP Parameter Misconfiguration: login/no_automatic_user_sapstar"
+  ["login/min_password_specials"]="SAP Password policy and Idle passwords invalidation"
+  ["login/min_password_lng"]="SAP Password policy and Idle passwords invalidation"
+  ["login/min_password_lowercase"]="SAP Password policy and Idle passwords invalidation"
+  ["login/min_password_uppercase"]="SAP Password policy and Idle passwords invalidation"
+  ["login/min_password_digits"]="SAP Password policy and Idle passwords invalidation"
+  ["login/min_password_letters"]="SAP Password policy and Idle passwords invalidation"
+  ["login/fails_to_user_lock"]="SAP Password policy and Idle passwords invalidation"
+  ["login/password_expiration_time"]="SAP Password policy and Idle passwords invalidation"
+  ["login/password_max_idle_initial"]="SAP Password policy and Idle passwords invalidation"
+  ["login/password_max_idle_productive"]="SAP Password policy and Idle passwords invalidation"
+  ["login/password_downwards_compatibility"]="SAP Password policy and Idle passwords invalidation"
+  ["rfc/reject_expired_passwd"]="SAP RFC logon possible with expired passwords"
+  ["rsau/enable"]="SAP Parameter Misconfiguration: rsau/enable"
+  ["rdisp/gui_auto_logout"]="SAP GUI session timeout not set"
+  ["service/protectedwebmethods"]="SAP Management Console Unprotected Methods"
+  ["snc/enable"]="SAP Parameter Misconfiguration: snc/enable"
+  ["ucon/rfc/active"]="SAP Unified Connectivity not active"
 )
 
 # Order of parameters for display
@@ -161,6 +196,11 @@ extract_parameters() {
   echo -e "${color}User-Defined Value: ${user_defined}${NC}"
   echo -e "${color}System Default Value: ${system_default}${NC}"
   echo -e "${color}Comment: ${comment}${NC}"
+
+  # Print potential vulnerability title
+  if [ -n "${VULNERABILITIES[$search_param]}" ]; then
+    echo -e "${GRAY}${ITALIC}Vulnerability: \"${VULNERABILITIES[$search_param]}${NC}\""
+  fi
 }
 
 # Main function to handle input and output
