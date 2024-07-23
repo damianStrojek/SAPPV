@@ -28,13 +28,55 @@ PARAMETERS=(
   ["icm/server_port_2"]=""
   ["login/password_compliance_to_current_policy"]="0"
   ["login/no_automatic_user_sapstar"]="0"
-  ["service/protectedwebmethods"]="SDEFAULT"
-  ["snc/enable"]="0"
+  ["login/min_password_specials"]="0"
+  ["login/min_password_lng"]="<8"
+  ["login/min_password_lowercase"]="0"
+  ["login/min_password_uppercase"]="0"
+  ["login/min_password_digits"]="0"
+  ["login/min_password_letters"]="1"
+  ["login/fails_to_user_lock"]="<5"
+  ["login/password_expiration_time"]=">90"
+  ["login/password_max_idle_initial"]="<14"
+  ["login/password_max_idle_productive"]="<180"
+  ["login/password_downwards_compatibility"]="0"
   ["rfc/reject_expired_passwd"]="0"
   ["rsau/enable"]="0"
   ["rdisp/gui_auto_logout"]="<5"
+  ["service/protectedwebmethods"]="SDEFAULT"
+  ["snc/enable"]="0"
   ["ucon/rfc/active"]="0"
-  
+)
+
+# Order of parameters for display
+PARAM_ORDER=(
+  "auth/no_check_in_some_cases"
+  "auth/object_disabling_active"
+  "auth/rfc_authority_check"
+  "bdc/bdel_auth_check"
+  "gw/reg_no_conn_info"
+  "icm/security_log"
+  "icm/server_port_0"
+  "icm/server_port_1"
+  "icm/server_port_2"
+  "login/fails_to_user_lock"
+  "login/min_password_digits"
+  "login/min_password_letters"
+  "login/min_password_lng"
+  "login/min_password_lowercase"
+  "login/min_password_specials"
+  "login/min_password_uppercase"
+  "login/no_automatic_user_sapstar"
+  "login/password_compliance_to_current_policy"
+  "login/password_downwards_compatibility"
+  "login/password_expiration_time"
+  "login/password_max_idle_initial"
+  "login/password_max_idle_productive"
+  "rdisp/gui_auto_logout"
+  "rfc/reject_expired_passwd"
+  "rsau/enable"
+  "service/protectedwebmethods"
+  "snc/enable"
+  "ucon/rfc/active"
 )
 
 # Function to determine color based on parameter value
@@ -55,112 +97,29 @@ get_color() {
   value=$(echo "$value" | tr -d '[:space:]' | tr -d 'H')
 
   case "$param" in
-    "auth/object_disabling_active")
+    "auth/object_disabling_active"|"auth/no_check_in_some_cases"|"bdc/bdel_auth_check"|"icm/security_log"|"login/password_compliance_to_current_policy"|"login/no_automatic_user_sapstar"|"service/protectedwebmethods"|"snc/enable"|"rfc/reject_expired_passwd"|"rsau/enable"|"ucon/rfc/active"|"login/min_password_specials"|"login/min_password_lowercase"|"login/min_password_uppercase"|"login/min_password_digits"|"login/min_password_letters"|"login/password_downwards_compatibility")
       if [ "$value" == "$expected_value" ]; then
         echo "$RED"
       else
         echo "$GREEN"
       fi
       ;;
-    "auth/rfc_authority_check")
+    "auth/rfc_authority_check"|"gw/reg_no_conn_info"|"rdisp/gui_auto_logout"|"login/min_password_lng"|"login/fails_to_user_lock"|"login/password_max_idle_initial"|"login/password_max_idle_productive")
       if [ "$(echo "$value" | tr -d '[:space:]')" -lt "${expected_value//<}" ]; then
         echo "$RED"
       else
         echo "$GREEN"
       fi
       ;;
-    "auth/no_check_in_some_cases")
-      if [ "$value" == "$expected_value" ]; then
+    "login/password_expiration_time")
+      if [ "$(echo "$value" | tr -d '[:space:]')" -gt "${expected_value//>/}" ]; then
         echo "$RED"
       else
         echo "$GREEN"
       fi
       ;;
-    "bdc/bdel_auth_check")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "gw/reg_no_conn_info")
-      if [ "$(echo "$value" | tr -d '[:space:]')" -lt "${expected_value//<}" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "icm/security_log")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "icm/server_port_0")
+    "icm/server_port_0"|"icm/server_port_1"|"icm/server_port_2")
       echo "$YELLOW"
-      ;;
-    "icm/server_port_1")
-      echo "$YELLOW"
-      ;;
-    "icm/server_port_2")
-      echo "$YELLOW"
-      ;;
-    "login/password_compliance_to_current_policy")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "login/no_automatic_user_sapstar")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "service/protectedwebmethods")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "snc/enable")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "rfc/reject_expired_passwd")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "rsau/enable")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "rdisp/gui_auto_logout")
-      if [ "$(echo "$value" | tr -d '[:space:]' | tr -d 'H')" -lt "${expected_value//<}" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
-      ;;
-    "ucon/rfc/active")
-      if [ "$value" == "$expected_value" ]; then
-        echo "$RED"
-      else
-        echo "$GREEN"
-      fi
       ;;
     *)
       echo "$NC"
@@ -221,7 +180,7 @@ main() {
   echo ""
 
   # Process parameters with expected values
-  for param in "${!PARAMETERS[@]}"; do
+  for param in "${PARAM_ORDER[@]}"; do
     extract_parameters "$xml_file" "$param" "${PARAMETERS[$param]}"
     echo
   done
