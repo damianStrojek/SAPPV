@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# SAP Parameter Validator, unauthenticated checks
+# Copyright (C) 2024 Damian Strojek
+#
 
 # Checking if the correct number of arguments is provided
 if [ "$#" -ne 2 ]; then

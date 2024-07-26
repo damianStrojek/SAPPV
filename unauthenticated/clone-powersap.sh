@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Dependency
 sudo apt-get install powershell
 
