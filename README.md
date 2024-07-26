@@ -12,7 +12,7 @@ Key Features:
 
 ## Using SAPPV
 
-```sh
+```bash
 # Setup
 git clone https://github.com/damianStrojek/SAPPV.git
 cd SAPPV/
@@ -71,6 +71,22 @@ For example, if <i>gw/reg_no_conn_info</i> is set to less than 255 (`<255`), the
 | `snc/enable`                                  | `0`         | Enables or disables Secure Network Communication (SNC). |
 | `ucon/rfc/active`                             | `0`         | Activates or deactivates UCON (Unified Connectivity) RFCs. |
 
+## Unauthenticated Scan
+
+When it comes to SAP pentesting, it is also worth it to check out what you can access as an unauthenticated user.
+
+Easiest way is to use tool [powersap]() to which I have additionally prepared iteration script. After some changes to `Invoke-mgmt-con-soap.ps1` it iterates through all checks.
+
+```bash
+cd unauthenticated/
+chmod +x powersap-clone.sh run-Invoke-mgmt-con-soap.sh
+
+# Prepare powersap
+./powersap-clone.sh
+
+# Remember to make necessary changes to powersap/Standalone/soap/`Invoke-mgmt-con-soap.ps1
+./run-Invoke-mgmt-con-soap.sh
+```
 
 ## Disclaimer
 
